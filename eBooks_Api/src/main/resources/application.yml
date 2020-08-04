@@ -1,0 +1,41 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: ebooksconsumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.8.152.23:8848
+    sentinel:
+      transport:
+        port: 8719
+        dashboard: 127.0.0.1:8080
+  sleuth:
+    sampler:
+      probability: 1 #采样率
+    zipkin:
+    sender:
+      type: web #使用http协议进行数据的传输
+    base-url: http://lcoalhost:9411/ #zipkin的控制台的地址
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000 #设置连接的超时时间
+        readTimeout: 20000 #设置读取的超时时间
+
+  sentinel:
+    enabled: true #Feign启用Sentinel
+
+eBooks_Api:
+
+  redis:
+    host: 47.95.228.58
+    port: 6379
+    pass: root
+
+      #连接池最大连接数
+    maxTotal: 150
+    maxIdle: 10

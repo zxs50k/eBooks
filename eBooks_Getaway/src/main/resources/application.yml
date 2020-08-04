@@ -1,0 +1,24 @@
+server:
+  port: 80
+spring:
+  application:
+    name: ebooksgateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 10.8.152.23:8848
+
+    #路由 匹配转发
+    gateway:
+      discovery: #可以实现注册中心所有服务的直接访问 请求网关，后面追加服务的名称(全小写)
+        locator:
+          enabled: true #允许从注册中心直接访问服务
+          lower-case-service-id: true  #服务名称小写访问
+      routes:
+        - id: openapi  #随便命名 唯一即可
+          uri: lb://ebooksconsumer #标记匹配哪的服务，如果来自注册中心，那么需要使用lb:服务的名称
+          predicates:
+            - Path=/ebooks/**  #请求路径，也就是外界需要请求的名称，如果请求匹配，那么就会转发请求到对应服务上
+          filters:
+            - StripPrefix=1  #设置路由匹配的时候，去除的路径层级。
+#      - id:xxx 可以配置多个服务
