@@ -16,6 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/oss/")
 public class OssController {
+    //实验
+    public static void main(String[] args) {
+
+    }
+
     @Autowired
     private OssService service;
 
